@@ -1,0 +1,47 @@
+/* Vortex Ebony Design System */
+
+:root {
+    --v-black: #000000;
+    --v-ebony: #0a0a0a;
+    --v-gray-dark: #121212;
+    --v-gray-medium: #1e1e1e;
+    --v-gray-light: #2a2a2a;
+    --v-text-primary: #ffffff;
+    --v-text-secondary: #a0a0a0;
+    --v-accent: #3b82f6; /* Initial blue accent */
+    --v-error: #ef4444;
+    --v-success: #22c55e;
+}
+
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--v-black);
+    color: var(--v-text-primary);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--v-black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--v-gray-medium);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--v-gray-light);
+}

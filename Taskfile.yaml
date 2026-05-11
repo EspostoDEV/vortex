@@ -1,0 +1,44 @@
+version: '3'
+
+tasks:
+  setup:
+    desc: Initial project setup
+    cmds:
+      - composer install
+      - npm install
+      - php artisan key:generate
+      - php artisan migrate
+      - "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+
+  dev:
+    desc: Run development servers
+    cmds:
+      - task: dev-backend
+      - task: dev-frontend
+    deps: [dev-backend, dev-frontend]
+
+  dev-backend:
+    desc: Run PHP development server
+    cmds:
+      - php artisan serve
+
+  dev-frontend:
+    desc: Run Vite development server
+    cmds:
+      - npm run dev
+
+  test:
+    desc: Run all tests
+    cmds:
+      - task: test-backend
+      - task: test-frontend
+
+  test-backend:
+    desc: Run Pest tests
+    cmds:
+      - php artisan test
+
+  test-frontend:
+    desc: Run Vitest tests
+    cmds:
+      - npm run test:unit
