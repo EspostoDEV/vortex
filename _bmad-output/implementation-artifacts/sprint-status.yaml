@@ -44,7 +44,7 @@ story_location: _bmad-output/implementation-artifacts
 development_status:
   epic-1: in-progress
   1-1-project-bootstrap-environment-setup: done
-  1-2-vault-double-envelope-encryption: backlog
+  1-2-vault-double-envelope-encryption: review
   1-3-secure-authentication-headless: backlog
   1-4-connection-wizard-ui-ebony-style: backlog
   1-5-provider-validation-handshake: backlog
