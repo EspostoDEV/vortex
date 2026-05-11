@@ -20,8 +20,6 @@ return new class extends Migration
             $table->json('credential');
             $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
-
-            $table->index('user_id');
         });
     }
 

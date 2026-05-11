@@ -45,3 +45,18 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--v-gray-light);
 }
+
+/* Utilities */
+.bg-v-black { background-color: var(--v-black); }
+.bg-v-ebony { background-color: var(--v-ebony); }
+.bg-v-gray-dark { background-color: var(--v-gray-dark); }
+.bg-v-gray-medium { background-color: var(--v-gray-medium); }
+
+.text-v-primary { color: var(--v-text-primary); }
+.text-v-secondary { color: var(--v-text-secondary); }
+.text-v-accent { color: var(--v-accent); }
+.text-v-success { color: var(--v-success); }
+.text-v-error { color: var(--v-error); }
+
+.border-v-gray-medium { border-color: var(--v-gray-medium); }
+.border-v-gray-light { border-color: var(--v-gray-light); }

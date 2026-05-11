@@ -1,6 +1,6 @@
 # Story 1.1: Project Bootstrap & Environment Setup
 
-Status: review
+Status: done
 
 ## Story
 

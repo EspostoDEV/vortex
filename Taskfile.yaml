@@ -4,17 +4,15 @@ tasks:
   setup:
     desc: Initial project setup
     cmds:
+      - "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+      - "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\""
       - composer install
       - npm install
       - php artisan key:generate
       - php artisan migrate
-      - "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
 
   dev:
     desc: Run development servers
-    cmds:
-      - task: dev-backend
-      - task: dev-frontend
     deps: [dev-backend, dev-frontend]
 
   dev-backend:
