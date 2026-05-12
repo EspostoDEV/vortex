@@ -53,7 +53,7 @@ development_status:
   epic-2: backlog
   2-1-unified-monitoring-dashboard-base-layout: done
   2-2-zustand-telemetry-store: done
-  2-3-real-time-metric-streaming-reverb: in-progress
+  2-3-real-time-metric-streaming-reverb: done
   2-4-resource-card-atc-card-visual-states: backlog
   2-5-delta-mode-adaptive-polling: backlog
   epic-2-retrospective: optional

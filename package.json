@@ -9,8 +9,10 @@
         "@vitejs/plugin-react": "^4.7.0",
         "autoprefixer": "^10.5.0",
         "axios": "^1.6.4",
+        "laravel-echo": "^2.3.4",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.5.14",
+        "pusher-js": "^8.5.0",
         "tailwindcss": "^4.3.0",
         "vite": "^5.0"
     },

@@ -13,9 +13,12 @@ import { useMetricStore } from '@/Stores/useMetricStore';
 import DashboardLayout from '@/Components/Dashboard/DashboardLayout';
 import TwoFactorAuthenticationForm from './Profile/TwoFactorAuthenticationForm';
 
+import { useTelemetryStream } from '@/Hooks/useTelemetryStream';
+
 export default function Dashboard({ auth, providers, resources }) {
     const setResources = useMetricStore(state => state.setResources);
     const [selectedResourceId, setSelectedResourceId] = useState(null);
+    const { isConnected } = useTelemetryStream();
 
     const hasHydrated = React.useRef(false);
 
@@ -52,6 +55,21 @@ export default function Dashboard({ auth, providers, resources }) {
         >
             <Head title="Control Plane | Vortex" />
             
+            {/* Out-of-Sync Indicator — only shown after a confirmed drop, not during initial handshake */}
+            <AnimatePresence>
+                {isConnected === false && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-2 rounded-lg flex items-center gap-2 backdrop-blur-md shadow-2xl shadow-red-500/10"
+                    >
+                        <AlertCircle className="w-4 h-4 animate-pulse" />
+                        <span className="text-sm font-medium tracking-wider">TELEMETRY OUT-OF-SYNC</span>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <motion.header 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
