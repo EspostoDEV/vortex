@@ -13,6 +13,11 @@ class ProxmoxDriver implements ProviderInterface
         return 'proxmox';
     }
 
+    public function getResources(array $config): array
+    {
+        return [];
+    }
+
     public function validate(array $config): array
     {
         $url = rtrim($config['url'], '/');

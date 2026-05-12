@@ -13,6 +13,11 @@ class DockerDriver implements ProviderInterface
         return 'docker';
     }
 
+    public function getResources(array $config): array
+    {
+        return [];
+    }
+
     public function validate(array $config): array
     {
         $url = rtrim($config['url'], '/');

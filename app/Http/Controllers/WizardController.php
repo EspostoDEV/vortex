@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Core\Drivers\ProxmoxDriver;
 use App\Core\Drivers\DockerDriver;
+use App\Core\Drivers\MockDriver;
 
 class WizardController extends Controller
 {
@@ -24,9 +25,13 @@ class WizardController extends Controller
             'token_secret' => 'required|string',
         ]);
 
-        $driver = $data['provider_type'] === 'proxmox' 
-            ? new ProxmoxDriver() 
-            : new DockerDriver();
+        if (config('vortex.simulation_mode')) {
+            $driver = new MockDriver();
+        } else {
+            $driver = $data['provider_type'] === 'proxmox' 
+                ? new ProxmoxDriver() 
+                : new DockerDriver();
+        }
 
         $result = $driver->validate($data);
 

@@ -51,7 +51,7 @@ development_status:
   epic-1-retrospective: optional
 
   epic-2: backlog
-  2-1-unified-monitoring-dashboard-base-layout: backlog
+  2-1-unified-monitoring-dashboard-base-layout: done
   2-2-zustand-telemetry-store: backlog
   2-3-real-time-metric-streaming-reverb: backlog
   2-4-resource-card-atc-card-visual-states: backlog

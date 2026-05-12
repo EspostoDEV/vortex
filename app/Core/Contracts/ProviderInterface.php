@@ -18,4 +18,12 @@ interface ProviderInterface
      * @return string
      */
     public function getName(): string;
+
+    /**
+     * Get all resources from the provider.
+     *
+     * @param array $config
+     * @return array
+     */
+    public function getResources(array $config): array;
 }

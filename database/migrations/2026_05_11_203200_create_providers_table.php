@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('type'); // proxmox, docker
             $table->string('url');
             $table->string('token_id')->nullable();
