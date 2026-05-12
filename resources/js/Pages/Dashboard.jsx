@@ -1,28 +1,201 @@
-import { Head } from '@inertiajs/react';
+import React from 'react';
+import { Head, Link } from '@inertiajs/react';
+import { motion } from 'framer-motion';
+import { 
+    LayoutDashboard, 
+    ShieldCheck, 
+    Activity, 
+    Terminal, 
+    Power, 
+    Cpu, 
+    Lock,
+    AlertCircle
+} from 'lucide-react';
+import TwoFactorAuthenticationForm from './Profile/TwoFactorAuthenticationForm';
 
-export default function Dashboard() {
+export default function Dashboard({ auth }) {
+    const container = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    };
+
+    const item = {
+        hidden: { opacity: 0, y: 10 },
+        show: { opacity: 1, y: 0 }
+    };
+
     return (
-        <>
-            <Head title="Dashboard" />
-            <div className="min-h-screen flex items-center justify-center bg-v-black">
-                <div className="p-8 border border-v-gray-medium rounded-lg bg-v-ebony shadow-2xl">
-                    <h1 className="text-3xl font-bold text-white mb-4">Vortex Engine</h1>
-                    <p className="text-v-secondary">
-                        System initialized. Manual bootstrap complete.
-                    </p>
-                    <div className="mt-6 flex gap-4">
-                        <span className="px-3 py-1 bg-v-gray-medium text-xs rounded text-v-success border border-v-gray-light" style={{ fontSize: '0.75rem' }}>
-                            PHP 8.4
-                        </span>
-                        <span className="px-3 py-1 bg-v-gray-medium text-xs rounded text-v-success border border-v-gray-light" style={{ fontSize: '0.75rem' }}>
-                            Laravel 11
-                        </span>
-                        <span className="px-3 py-1 bg-v-gray-medium text-xs rounded text-v-success border border-v-gray-light" style={{ fontSize: '0.75rem' }}>
-                            React 19
-                        </span>
-                    </div>
+        <div className="min-h-screen bg-v-black text-white font-sans selection:bg-v-success selection:text-v-black">
+            <Head title="Control Plane | Vortex" />
+            
+            {/* Sidebar / Nav */}
+            <nav className="fixed left-0 top-0 h-full w-20 bg-v-ebony border-r border-v-gray-800 flex flex-col items-center py-8 z-50">
+                <div className="w-10 h-10 bg-v-black border border-v-gray-700 rounded-xl flex items-center justify-center mb-12 shadow-glow-success">
+                    <ShieldCheck className="text-v-success w-6 h-6" />
                 </div>
-            </div>
-        </>
+                
+                <div className="flex-1 flex flex-col items-center space-y-8">
+                    <button className="p-3 bg-v-gray-900 text-v-success rounded-xl shadow-lg border border-v-success/20 flex items-center justify-center">
+                        <LayoutDashboard size={24} />
+                    </button>
+                    <button className="p-3 text-v-gray-600 hover:text-white transition-colors flex items-center justify-center">
+                        <Activity size={24} />
+                    </button>
+                    <button className="p-3 text-v-gray-600 hover:text-white transition-colors flex items-center justify-center">
+                        <Terminal size={24} />
+                    </button>
+                </div>
+
+                <Link 
+                    href="/logout" 
+                    method="post" 
+                    as="button"
+                    className="p-3 text-v-danger hover:bg-v-danger/10 rounded-xl transition-all flex items-center justify-center"
+                >
+                    <Power size={24} />
+                </Link>
+            </nav>
+
+            {/* Main Content */}
+            <main className="pl-28 pr-8 py-10 max-w-7xl mx-auto">
+                <motion.header 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="flex justify-between items-end mb-12"
+                >
+                    <div>
+                        <div className="flex items-center gap-3 text-v-gray-500 text-xs font-bold tracking-widest uppercase mb-2">
+                            <span className="w-2 h-2 rounded-full bg-v-success" />
+                            System Operational
+                        </div>
+                        <h1 className="text-5xl font-bold tracking-tighter">CONTROL PLANE</h1>
+                    </div>
+                    
+                    <div className="text-right">
+                        <p className="text-v-gray-500 text-xs font-bold uppercase tracking-widest mb-1">Authenticated Operator</p>
+                        <p className="text-xl font-semibold">{auth.user.name}</p>
+                    </div>
+                </motion.header>
+
+                <motion.div 
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+                >
+                    {/* Status Cards */}
+                    <motion.div variants={item} className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-v-glass border border-v-gray-800 rounded-2xl p-6 relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <Cpu size={80} />
+                            </div>
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="p-2 bg-v-success/10 rounded-lg">
+                                    <Activity className="text-v-success w-5 h-5" />
+                                </div>
+                                <h3 className="font-bold text-sm uppercase tracking-wider text-v-gray-400">Kernel Analytics</h3>
+                            </div>
+                            <div className="space-y-4">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-v-gray-500 text-sm">Engine Status</span>
+                                    <span className="text-v-success font-mono text-sm font-bold">STABLE</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-v-gray-500 text-sm">Laravel Instance</span>
+                                    <span className="text-white font-mono text-sm">v11.51.0 (LTS)</span>
+                                </div>
+                                <div className="w-full bg-v-gray-900 h-1.5 rounded-full overflow-hidden mt-2">
+                                    <motion.div 
+                                        initial={{ width: 0 }}
+                                        animate={{ width: '65%' }}
+                                        className="h-full bg-v-success shadow-[0_0_10px_var(--v-success)]"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-v-glass border border-v-gray-800 rounded-2xl p-6 relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <Lock size={80} />
+                            </div>
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="p-2 bg-v-warning/10 rounded-lg">
+                                    <Lock className="text-v-warning w-5 h-5" />
+                                </div>
+                                <h3 className="font-bold text-sm uppercase tracking-wider text-v-gray-400">Security Layer</h3>
+                            </div>
+                            <div className="space-y-4">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-v-gray-500 text-sm">Vault Protocol</span>
+                                    <span className="text-v-warning font-mono text-sm font-bold">AES-256-GCM</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-v-gray-500 text-sm">Session TTL</span>
+                                    <span className="text-white font-mono text-sm">3600 SECONDS</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-[10px] text-v-gray-600 font-bold mt-2">
+                                    <ShieldCheck size={12} className="text-v-success" />
+                                    DOUBLE-ENVELOPE ACTIVE
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="md:col-span-2">
+                            <TwoFactorAuthenticationForm user={auth.user} />
+                        </div>
+                    </motion.div>
+
+                    {/* Sidebar Info */}
+                    <motion.div variants={item} className="space-y-6">
+                        <div className="bg-v-gray-900/50 border border-v-gray-800 rounded-2xl p-6">
+                            <h3 className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-v-gray-400 mb-6">
+                                <Terminal size={16} />
+                                Live Telemetry
+                            </h3>
+                            <div className="space-y-3 font-mono text-[10px]">
+                                <div className="flex gap-3 text-v-gray-600">
+                                    <span className="text-v-success">[OK]</span>
+                                    <span>VAULT_INITIALIZED_SUCCESS</span>
+                                </div>
+                                <div className="flex gap-3 text-v-gray-600">
+                                    <span className="text-v-success">[OK]</span>
+                                    <span>AUTH_GATE_READY</span>
+                                </div>
+                                <div className="flex gap-3 text-v-gray-600">
+                                    <span className="text-v-warning">[WRN]</span>
+                                    <span>NO_PROXMOX_PROVIDERS_LINKED</span>
+                                </div>
+                                <div className="flex gap-3 text-v-gray-400 animate-pulse">
+                                    <span className="text-v-success">_</span>
+                                    <span>AWAITING COMMAND...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-gradient-to-br from-v-accent/20 to-v-black border border-v-accent/30 rounded-2xl p-6">
+                            <div className="flex items-start gap-4">
+                                <div className="p-3 bg-v-accent/20 rounded-xl">
+                                    <AlertCircle className="text-v-accent w-6 h-6" />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-sm mb-1">Setup Required</h4>
+                                    <p className="text-xs text-v-gray-400 leading-relaxed">
+                                        Your control plane is isolated. Link a provider to start orchestrating resources.
+                                    </p>
+                                    <button className="mt-4 text-xs font-bold text-v-accent hover:text-white transition-colors">
+                                        RUN WIZARD →
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            </main>
+        </div>
     );
 }

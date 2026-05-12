@@ -1,62 +1,66 @@
-/* Vortex Ebony Design System */
+@import "tailwindcss";
 
-:root {
-    --v-black: #000000;
-    --v-ebony: #0a0a0a;
-    --v-gray-dark: #121212;
-    --v-gray-medium: #1e1e1e;
-    --v-gray-light: #2a2a2a;
-    --v-text-primary: #ffffff;
-    --v-text-secondary: #a0a0a0;
-    --v-accent: #3b82f6; /* Initial blue accent */
-    --v-error: #ef4444;
-    --v-success: #22c55e;
+@theme {
+    /* Ebony Palette - Deep & Vibrant */
+    --color-v-black: #050505;
+    --color-v-ebony: #0d0d0d;
+    --color-v-ebony-glass: rgba(13, 13, 13, 0.7);
+    --color-v-gray-900: #121212;
+    --color-v-gray-800: #1a1a1a;
+    --color-v-gray-700: #2a2a2a;
+    --color-v-gray-600: #404040;
+    --color-v-gray-400: #a3a3a3;
+    
+    /* Semantic Colors */
+    --color-v-success: #00ff88;
+    --color-v-warning: #ffb800;
+    --color-v-danger: #ff4d4d;
+    --color-v-accent: #7000ff;
+    
+    /* Fonts */
+    --font-sans: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Custom Shadow */
+    --shadow-glow-success: 0 0 15px rgba(0, 255, 136, 0.2);
 }
 
-/* Base Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+@layer base {
+    body {
+        @apply bg-v-black text-white font-sans antialiased;
+        overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: theme('colors.v-black');
+    }
+    ::-webkit-scrollbar-thumb {
+        background: theme('colors.v-gray-800');
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: theme('colors.v-gray-700');
+    }
 }
 
-body {
-    background-color: var(--v-black);
-    color: var(--v-text-primary);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
+@layer components {
+    .bg-v-glass { 
+        @apply bg-v-ebony/70 backdrop-blur-xl;
+    }
 }
 
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-    width: 8px;
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-::-webkit-scrollbar-track {
-    background: var(--v-black);
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
 }
-
-::-webkit-scrollbar-thumb {
-    background: var(--v-gray-medium);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--v-gray-light);
-}
-
-/* Utilities */
-.bg-v-black { background-color: var(--v-black); }
-.bg-v-ebony { background-color: var(--v-ebony); }
-.bg-v-gray-dark { background-color: var(--v-gray-dark); }
-.bg-v-gray-medium { background-color: var(--v-gray-medium); }
-
-.text-v-primary { color: var(--v-text-primary); }
-.text-v-secondary { color: var(--v-text-secondary); }
-.text-v-accent { color: var(--v-accent); }
-.text-v-success { color: var(--v-success); }
-.text-v-error { color: var(--v-error); }
-
-.border-v-gray-medium { border-color: var(--v-gray-medium); }
-.border-v-gray-light { border-color: var(--v-gray-light); }

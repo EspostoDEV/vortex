@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -29,6 +30,27 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
+
+        Fortify::loginView(function () {
+            return Inertia::render('Auth/Login');
+        });
+
+        Fortify::twoFactorChallengeView(function () {
+            return Inertia::render('Auth/TwoFactorChallenge');
+        });
+
+        Fortify::registerView(function () {
+            return Inertia::render('Auth/Register');
+        });
+
+        Fortify::verifyEmailView(function () {
+            return Inertia::render('Auth/VerifyEmail');
+        });
+
+        Fortify::confirmPasswordView(function () {
+            return Inertia::render('Auth/ConfirmPassword');
+        });
+
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);

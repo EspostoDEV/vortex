@@ -10,7 +10,8 @@
         "laravel/fortify": "^1.36",
         "laravel/framework": "^11.0",
         "laravel/passkeys": "^0.1.0",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "tightenco/ziggy": "^2.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
