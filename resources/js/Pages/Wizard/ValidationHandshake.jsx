@@ -2,28 +2,42 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Activity, ShieldCheck, AlertCircle, Loader2, Save, ChevronLeft } from 'lucide-react';
 import { router } from '@inertiajs/react';
+import axios from 'axios';
 
 export default function ValidationHandshake({ data, onBack }) {
     const [status, setStatus] = useState('pending'); // pending, validating, success, error
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        const timer = setTimeout(() => {
+        const performHandshake = async () => {
             setStatus('validating');
-        }, 1000);
-
-        const timer2 = setTimeout(() => {
-            setStatus('success');
-        }, 3500);
-
-        return () => {
-            clearTimeout(timer);
-            clearTimeout(timer2);
+            try {
+                const response = await axios.post('/wizard/validate', data);
+                if (response.data.success) {
+                    setStatus('success');
+                } else {
+                    setStatus('error');
+                    setErrorMessage(response.data.message);
+                }
+            } catch (err) {
+                setStatus('error');
+                setErrorMessage(err.response?.data?.message || 'Network error occurred during handshake.');
+            }
         };
+
+        performHandshake();
     }, []);
 
-    const saveConnection = () => {
-        // This will be implemented in Story 1.5
-        router.visit('/dashboard');
+    const saveConnection = async () => {
+        try {
+            const response = await axios.post('/wizard/save', data);
+            if (response.data.success) {
+                router.visit('/dashboard');
+            }
+        } catch (err) {
+            setErrorMessage('Failed to persist connection. ' + (err.response?.data?.message || ''));
+            setStatus('error');
+        }
     };
 
     return (
@@ -61,7 +75,7 @@ export default function ValidationHandshake({ data, onBack }) {
                     {status === 'pending' && 'Initializing driver protocols and checking local vault connectivity...'}
                     {status === 'validating' && `Attempting to reach ${data.url} with ${data.token_id}...`}
                     {status === 'success' && 'The remote provider has accepted the cryptographical identity. All systems are go.'}
-                    {status === 'error' && 'The remote API rejected the credentials. Check your token and URL parameters.'}
+                    {status === 'error' && (errorMessage || 'The remote API rejected the credentials. Check your token and URL parameters.')}
                 </p>
             </div>
 

@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('type'); // proxmox, docker, etc.
-            $table->text('credentials'); // Encrypted JSON
+            $table->string('type'); // proxmox, docker
+            $table->string('url');
+            $table->string('token_id')->nullable();
+            $table->text('token_secret')->nullable(); // Encrypted via DoubleEnvelope
             $table->timestamps();
         });
     }

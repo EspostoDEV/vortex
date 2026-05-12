@@ -9,13 +9,15 @@ class Provider extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'credentials' => \App\Core\Vault\Casts\DoubleEnvelopeCast::class,
-    ];
-
     protected $fillable = [
         'name',
         'type',
-        'credentials',
+        'url',
+        'token_id',
+        'token_secret',
+    ];
+
+    protected $casts = [
+        'token_secret' => \App\Core\Vault\Casts\DoubleEnvelopeCast::class,
     ];
 }

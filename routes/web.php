@@ -14,3 +14,9 @@ Route::get('/dashboard', function () {
 Route::get('/wizard', [\App\Http\Controllers\WizardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('wizard');
+
+Route::post('/wizard/validate', [\App\Http\Controllers\WizardController::class, 'validate'])
+    ->middleware(['auth', 'verified']);
+
+Route::post('/wizard/save', [\App\Http\Controllers\WizardController::class, 'store'])
+    ->middleware(['auth', 'verified']);
