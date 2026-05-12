@@ -44,4 +44,13 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            if (app()->environment('local')) {
+                $user->markEmailAsVerified();
+            }
+        });
+    }
 }

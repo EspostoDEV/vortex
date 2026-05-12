@@ -9,11 +9,28 @@ import {
     AlertCircle,
     LayoutDashboard
 } from 'lucide-react';
+import { useMetricStore } from '@/Stores/useMetricStore';
 import DashboardLayout from '@/Components/Dashboard/DashboardLayout';
 import TwoFactorAuthenticationForm from './Profile/TwoFactorAuthenticationForm';
 
 export default function Dashboard({ auth, providers, resources }) {
-    const [selectedResource, setSelectedResource] = useState(null);
+    const setResources = useMetricStore(state => state.setResources);
+    const [selectedResourceId, setSelectedResourceId] = useState(null);
+
+    const hasHydrated = React.useRef(false);
+
+    // Hydrate store on mount only, preventing Inertia props from overwriting real-time updates
+    React.useEffect(() => {
+        if (!hasHydrated.current) {
+            setResources(resources);
+            hasHydrated.current = true;
+        }
+    }, [resources, setResources]);
+
+    // Read selected resource from Zustand for real-time reactivity
+    const selectedResource = useMetricStore(state => 
+        selectedResourceId ? state.resources[selectedResourceId] : null
+    );
 
     const container = {
         hidden: { opacity: 0 },
@@ -30,9 +47,8 @@ export default function Dashboard({ auth, providers, resources }) {
 
     return (
         <DashboardLayout 
-            resources={resources} 
-            onResourceSelect={setSelectedResource}
-            selectedResourceId={selectedResource?.id}
+            onResourceSelect={setSelectedResourceId}
+            selectedResourceId={selectedResourceId}
         >
             <Head title="Control Plane | Vortex" />
             

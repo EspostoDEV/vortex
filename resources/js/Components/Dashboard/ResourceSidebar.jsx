@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Search, Server, Cloud, Cpu, Activity, Circle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useMetricStore } from '@/Stores/useMetricStore';
 
-export default function ResourceSidebar({ resources, onSelect, selectedId }) {
+export default function ResourceSidebar({ onSelect, selectedId }) {
+    const resources = useMetricStore(state => Object.values(state.resources));
     const [search, setSearch] = useState('');
 
     const filteredResources = React.useMemo(() => {
